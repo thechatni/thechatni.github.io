@@ -1,7 +1,117 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>Hello Boi World</h1>
-    <p>I'm hosted with GitHub Pages.</p>
-  </body>
+<!doctype html>
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+    <meta charset="utf-8">
+    
+    <title>Criminal Interrogation</title>
+
+    
+    <meta http-equiv="content-language" content="en">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+   
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/mainf9e3.css?v=1.1">
+    <link rel="stylesheet" href="css/other.css">
+   
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>  
+    <div id="live">
+        <div id="cam_container" class="container_small">
+            <video id="videoel" width="300" height="225" preload="auto" loop muted>
+            </video>
+            <canvas id="cam_overlay" width="300" height="225"></canvas>
+        </div>
+        <div id='emotion_chart'>
+            <span class="factors">angry sad surprised happy</span>
+        </div>
+    </div>
+    <div id="wrap">
+      <div class="wrapper">
+        <p>Are you ready for the interrogation to begin?</p>
+        <a id="begin"><span>YES</span></a>
+      </div>
+    </div>
+    
+  
+      <div class="vids">
+        <video id="introvideo" preload="auto">
+          <source src="videos/example.mp4" type="video/mp4" />
+        </video>
+        <video id="secvideo" preload="auto" muted>
+          <source src="videos/example1.mp4" type="video/mp4" />
+        </video>
+      </div>
+  
+      <div id="intro">
+        <p class="line-1 anim-typewriter">
+          Interrogate requires access to your microphone and webcam.
+        </p>
+        <p class="line-2 anim-typewriters">
+          Allow use of webcam and microphone.
+        </p>
+      </div>
+        <!-- <div id = 'speech'>
+        <button id='btnGiveCommand'>Give Command!</button>
+        <br><br>
+        <span id='message'></span>
+        <br><br>
+        </div>
+        <script>
+            var message = document.querySelector('#message');
+
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+var grammar = '#JSGF V1.0;'
+
+var recognition = new SpeechRecognition();
+var speechRecognitionList = new SpeechGrammarList();
+speechRecognitionList.addFromString(grammar, 1);
+recognition.grammars = speechRecognitionList;
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+
+recognition.onresult = function(event) {
+    var last = event.results.length - 1;
+    var command = event.results[last][0].transcript;
+    message.textContent = 'Voice Input: ' + command + '.';
+  
+};
+
+recognition.onspeechend = function() {
+    recognition.stop();
+};
+
+recognition.onerror = function(event) {
+    message.textContent = 'Error occurred in recognition: ' + event.error;
+}        
+
+document.querySelector('#btnGiveCommand').addEventListener('click', function(){
+    recognition.start();
+
+});
+        </script> -->
+    
+
+        <script src="../libraries/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        
+        <!-- <script src="js/sharer.min.js"></script> -->
+        
+        <script src="emotion/js/utils.js"></script>
+        <script src="emotion/js/clmtrackr.min.js"></script>
+        <script src="emotion/js/model_pca_20_svm_emotionDetection.js"></script>
+        <!--Speech & emotion evaluation -->
+        <!-- <script src="emotion/js/Stats.js"></script> -->
+        <script src="emotion/js/d3.min.js"></script>
+        <script src="emotion/js/emotion_classifier.js"></script>
+        <script src="emotion/js/emotionmodel.js"></script>
+
+        <script src="js/main.js"></script>
+</body>
+
 </html>
