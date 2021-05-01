@@ -1,0 +1,38 @@
+html {
+  background: black;
+}
+
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background-color: rgb(252, 72, 72);
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  width: 100%;
+}
+
+.pace .pace-progress:after {
+  display: block;
+  position: fixed;
+  top: 50vh;
+  right: 100px;
+  content: attr(data-progress-text);
+  font-family: "Courier";
+  font-size: 5rem;
+  line-height: 1;
+  text-align: right;
+  color: black;
+}
