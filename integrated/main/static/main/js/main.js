@@ -27,7 +27,10 @@ emotionCount = 0;
 emotionLimit = 0;
 vidStop = 0;
 score = 0;
+difficulty = 0.55;
+bgSound = 1;
 
+var aud = document.getElementById("audio");
 var vid = document.getElementById("videoel");
 var overlay = document.getElementById("cam_overlay");
 var overlayCC = overlay.getContext("2d");
@@ -124,7 +127,7 @@ function getSimilarity(input, condition) {
 function showSimilarity(json) {
   // count += 1;
   score = score + parseFloat(json.label);
-  if (json.label < 0.55) {
+  if (json.label < difficulty) {
     wrong += 1;
     console.log(json.label);
     console.log("wrong: " + wrong);
@@ -182,6 +185,10 @@ function showVids() {
     '<source src="main/static/main/vids/guilty.mp4" type="video/mp4"></source>'
   );
 
+  if (bgSound == 1) {
+    aud.play();
+  }
+
   $("#v1").get(0).play();
   setTimeout(function () {
     console.log(first[ran1].ans);
@@ -228,12 +235,15 @@ function showVids() {
                 $("#innocent").show();
                 $("#innocent").get(0).play();
                 $("#innocent").on("ended", function () {
+                  aud.pause();
                   addScore();
                 });
               } else {
                 $("#guilty").show();
                 $("#guilty").get(0).play();
                 $("#guilty").on("ended", function () {
+                  aud.pause();
+                  aud.currentTime = 0;
                   addScore();
                 });
               }
@@ -341,28 +351,87 @@ $(document).ready(function () {
   $(".line-2").hide();
   $(".line-3").hide();
   $("#v2").hide();
+  $("#audio").hide();
   $("#v3").hide();
   $("#v4").hide();
   $("#v5").hide();
   $("#innocent").hide();
   $("#guilty").hide();
+  $("#settings").hide();
   $("#leaderboard").hide();
 
+  $("#options").click(function () {
+    // alert("KJIU");
+    $("#easy").show();
+    $("#med").show();
+    $("#hard").show();
+    $("#basic").show();
+    $("#options").hide();
+    $("#alternate").hide();
+    $("#settings").show();
+    $(".wrapper").hide();
+    $("#back").click(function () {
+      $("#options").show();
+      $("#settings").hide();
+      $(".wrapper").show();
+    });
+    $("#easy").click(function () {
+      console.log("EASY");
+      difficulty = 0.3;
+      $("#med").hide();
+      $("#hard").hide();
+    });
+    $("#med").click(function () {
+      console.log("MEDIUM");
+      difficulty = 0.55;
+      $("#easy").hide();
+      $("#hard").hide();
+    });
+    $("#hard").click(function () {
+      console.log("HARD");
+      difficulty = 0.8;
+      $("#easy").hide();
+      $("#med").hide();
+    });
+    $("#bSound input").on("change", function () {
+      // alert("HMMM");
+      var newVal = $("[type='radio']:checked").val();
+      bgSound = parseInt(newVal);
+      console.log(bgSound);
+    });
+    $("#cred").click(function () {
+      $("#basic").hide();
+      $("#alternate").show();
+    });
+    // if ($("#on").is(":checked")) {
+    //   alert("ON");
+    // }
+    // if (document.getElementById("on").checked) {
+    //   console.log("ON");
+    // } else if (document.getElementById("off").checked) {
+    //   console.log("OFF");
+    // }
+    // if ($("input[name=bgSound]:checked").length > 0) {
+    //   alert("HMMM");
+    // }
+  });
+
   $("#begin").on("click", function () {
-    $("#wrap").hide();
-    // showTable();
-    selectData();
-
     // $("#wrap").hide();
-    // $("#intro").show();
-    // setTimeout(function () {
-    //   $(".line-1").hide();
-    //   $(".line-2").show();
+    // showTable();
+    // selectData();
+    // addScore();
 
-    //   setTimeout(function () {
-    //     testMic();
-    //   }, 2500);
-    // }, 4000);
+    $("#wrap").hide();
+    $("#intro").show();
+    setTimeout(function () {
+      $(".line-1").hide();
+      $(".line-2").show();
+
+      setTimeout(function () {
+        testMic();
+      }, 2500);
+    }, 4000);
   });
 });
 

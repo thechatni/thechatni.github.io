@@ -58,6 +58,58 @@
   font-size: 15px;
 }
 
+#options {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: wheat;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* #options a {
+  color: wheat;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#back a {
+  color: wheat;
+  cursor: pointer;
+  font-size: 15px;
+  cursor: pointer;
+} */
+#back {
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  color: wheat;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#user input {
+  background-color: crimson;
+}
+#settings {
+  margin-top: 30vh;
+}
+
+#settings p {
+  color: #ff003b;
+  font-size: 30px;
+}
+
+#level a {
+  color: wheat;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#settings label {
+  color: wheat;
+  font-size: 30px;
+}
 #sub {
   color: #ff003b;
   margin-left: auto;
@@ -134,6 +186,16 @@
   z-index: 2;
 }
 
+#easy:active {
+  color: #ff003b;
+}
+#med:active {
+  color: #ff003b;
+}
+#hard:active {
+  color: #ff003b;
+}
+
 .wrapper a:after {
   position: absolute;
   content: "";
@@ -200,6 +262,14 @@
   /* transform: translateY(-50%); */
 }
 
+#alternate span {
+  color: wheat;
+}
+
+#cred {
+  color: #ff003b;
+  cursor: pointer;
+}
 #nopermission span a {
   color: crimson;
   text-decoration: underline;

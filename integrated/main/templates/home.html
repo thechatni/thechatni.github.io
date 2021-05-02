@@ -41,9 +41,35 @@
         </div>
     </div>
     <div id="wrap">
+      <a id='options'>Options</a>
       <div class="wrapper">
         <p>Are you ready for the interrogation to begin?</p>
         <a id="begin"><span>YES</span></a>
+        
+      </div>
+      
+      <div id="settings">
+      
+        <a id='back'>Return</a>
+        <div id="basic">
+        <center>
+        <p id='level'>Select Difficulty Level: <a id="easy">EASY</a><a id="med">MEDIUM</a><a id="hard">HARD</a></p><br>
+        <p id='bSound'>Background Sound: 
+          <input type="radio" id="on" name="bgSound" value="1" checked="checked"/>
+          <label for="on">On</label>
+          <input type="radio" id="off" name="bgSound" value="0"/>
+          <label for="off">Off</label>
+        </p><br>
+        <p id='credits'><a id="cred">Credits</a></p>
+        </center>
+      </div>
+      <div id='alternate'>
+        <center>
+          <p>Interrogate - <span>CTIS 496 Project</span></p><br>
+          <p>Group Members: <span>Fahad Ahmad, Shams Karimova, <br>Hassam Bazil, Muhammad Faran</span></p><br>
+          <p>Supervisor: <span>Duygu Albayrak</span></p>
+        </center>
+      </div>
       </div>
     </div>
     
@@ -62,6 +88,9 @@
         <video id="v5" preload="auto"></video>
         <video id="innocent" preload="auto"></video>
         <video id="guilty" preload="auto"></video>
+        <audio id="audio">
+          <source src="../static/main/vids/bgSound.mp3" type="audio/mp3">
+        </audio>
       </div>
   
       <div id="intro">
@@ -104,7 +133,7 @@
         </table>
       </center>
       </div>
-      <
+      
         
       
         <script src="main/static/main/emotion/js/utils.js"></script>
