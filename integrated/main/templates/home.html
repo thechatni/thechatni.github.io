@@ -11,12 +11,21 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1" />
     <link rel="icon" type="image/x-icon" href="main/static/main/favicon.ico" />
 
-   
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="main/static/main/css/bootstrap.css">
     <link rel="stylesheet" href="main/static/main/css/normalize.min.css">
     <link rel="stylesheet" href="main/static/main/css/mainf9e3.css?v=1.1">
     <link rel="stylesheet" href="main/static/main/css/other.css">
-   
+    
+
     <script src="main/static/main/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+    <script src="main/static/main/libraries/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>  
@@ -73,8 +82,31 @@
           Therefore we require permission to use your camera and microphone.<br>
           Please change the permissions by clicking on the lock icon in <br> URL Bar. Then <a id="reloader">click here</a> to Reload. Thank you very much.</span>
       </div>
+
+      <div id='leaderboard'>
+        <center>
+        <p>LEADERBOARD</p><br>
+        <div id='user'>
+          Enter your name:<br><br>
+          Name: <input id='name' type="text"></input><br><br>
+          <button id="sub">Submit</button>
+        </div>
+      
+        <table id='dt'>
+            <thead>
+                <!-- <th>Position</th> -->
+                <th>Name</th>
+                <th>Points</th>
+            </thead>
+            <tbody id='tbody1'>
+
+            </tbody>
+        </table>
+      </center>
+      </div>
+      <
         
-      <script src="main/static/main/libraries/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      
         <script src="main/static/main/emotion/js/utils.js"></script>
         <script src="main/static/main/emotion/js/clmtrackr.min.js"></script>
         <script src="main/static/main/emotion/js/model_pca_20_svm_emotionDetection.js"></script>

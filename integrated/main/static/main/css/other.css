@@ -12,6 +12,65 @@
   background-size: 100%;
   background-repeat: no-repeat;
 }
+
+#leaderboard p {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#leaderboard {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: url("../img/dark.jpg");
+  /* background-position: center;
+    background-repeat: no-repeat; */
+  background-size: 100%;
+  background-repeat: no-repeat;
+  color: wheat;
+  padding-top: 15vh;
+  font-size: 20px;
+}
+
+#dt {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+  background-color: crimson;
+  opacity: 85%;
+  text-align: center;
+  padding: 10px;
+  /* padding-right: 10px; */
+}
+
+#user {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15vh;
+  font-size: 20px;
+}
+
+.dataTables_info {
+  color: #ff003b;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+#sub {
+  color: #ff003b;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+  width: 20vh;
+  height: 7vh;
+  text-align: center;
+  font-weight: bold;
+  background-color: wheat;
+  border-radius: 10px;
+}
+
 .videos {
   /* z-index: 0; */
   position: fixed;
@@ -57,7 +116,7 @@
   margin: auto;
   display: block;
   width: 100px;
-  height: 40px;
+  height: 60px;
   line-height: 40px;
   font-size: 18px;
   font-family: sans-serif;

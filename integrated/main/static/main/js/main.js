@@ -19,11 +19,20 @@ ran5 = Math.floor(Math.random() * 3);
 
 wrong = 0;
 correct = 0;
-count = 0;
+// count = 0;
+num = 0;
 happy = 0;
 surp = 0;
 emotionCount = 0;
 emotionLimit = 0;
+vidStop = 0;
+score = 0;
+
+var vid = document.getElementById("videoel");
+var overlay = document.getElementById("cam_overlay");
+var overlayCC = overlay.getContext("2d");
+var ctrack = new clm.tracker({ useWebGL: true });
+var p;
 
 first = {};
 second = {};
@@ -113,7 +122,8 @@ function getSimilarity(input, condition) {
 }
 
 function showSimilarity(json) {
-  count += 1;
+  // count += 1;
+  score = score + parseFloat(json.label);
   if (json.label < 0.55) {
     wrong += 1;
     console.log(json.label);
@@ -123,13 +133,13 @@ function showSimilarity(json) {
     console.log(json.label);
     console.log("correct: " + correct);
   }
-  if (count == 5) {
-    if (wrong > correct) {
-      console.log("GUILTY");
-    } else {
-      console.log("INNOCENT");
-    }
-  }
+  // if (count == 5) {
+  //   if (correct < 3) {
+  //     console.log("GUILTY");
+  //   } else {
+  //     console.log("INNOCENT");
+  //   }
+  // }
 }
 
 function showVids() {
@@ -176,7 +186,6 @@ function showVids() {
   setTimeout(function () {
     console.log(first[ran1].ans);
     recognizeSpeech(first[ran1].ans);
-    // getSimilarity("I don't know", first[ran1].ans);
   }, 2000);
   $("#v1").on("ended", function () {
     $("#v1").hide();
@@ -185,7 +194,6 @@ function showVids() {
     setTimeout(function () {
       console.log(second[ran2].ans);
       recognizeSpeech(second[ran2].ans);
-      // getSimilarity("I don't know", second[ran2].ans);
     }, 2000);
     $("#v2").on("ended", function () {
       $("#v2").hide();
@@ -194,7 +202,6 @@ function showVids() {
       setTimeout(function () {
         console.log(third[ran3].ans);
         recognizeSpeech(third[ran3].ans);
-        // getSimilarity("I don't know", third[ran3].ans);
       }, 2000);
       $("#v3").on("ended", function () {
         $("#v3").hide();
@@ -203,8 +210,6 @@ function showVids() {
         setTimeout(function () {
           console.log(fourth[ran4].ans);
           recognizeSpeech(fourth[ran4].ans);
-
-          // getSimilarity("I don't know", fourth[ran4].ans);
         }, 2000);
         $("#v4").on("ended", function () {
           $("#v4").hide();
@@ -213,20 +218,24 @@ function showVids() {
           setTimeout(function () {
             console.log(fifth[ran5].ans);
             recognizeSpeech(fifth[ran5].ans);
-
-            // getSimilarity("I don't know", fifth[ran5].ans);
           }, 2000);
           $("#v5").on("ended", function () {
             emotionLimit = emotionCount / 1500;
             // alert("FINIS");
             setTimeout(function () {
               $("#v5").hide();
-              if (correct > wrong && emotionLimit < 0.5) {
+              if (correct >= 3 && emotionLimit < 0.4) {
                 $("#innocent").show();
                 $("#innocent").get(0).play();
+                $("#innocent").on("ended", function () {
+                  addScore();
+                });
               } else {
                 $("#guilty").show();
                 $("#guilty").get(0).play();
+                $("#guilty").on("ended", function () {
+                  addScore();
+                });
               }
             }, 1500);
           });
@@ -234,6 +243,94 @@ function showVids() {
       });
     });
   });
+}
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAFi7t9Pz2-OAMS0fxsbbBRjiXLmJw-6iU",
+  authDomain: "leaderboard-interrogate.firebaseapp.com",
+  projectId: "leaderboard-interrogate",
+  storageBucket: "leaderboard-interrogate.appspot.com",
+  messagingSenderId: "1013047541462",
+  appId: "1:1013047541462:web:81313a5cdc41e6f02f1377",
+  measurementId: "G-3V1LCLQL8X",
+};
+firebase.initializeApp(firebaseConfig);
+
+var srNo = 0;
+function addToTable(name, points) {
+  var tbody = document.getElementById("tbody1");
+  var trow = document.createElement("tr");
+  // var td1 = document.createElement("td");
+  var td2 = document.createElement("td");
+  var td3 = document.createElement("td");
+  // td1.innerHTML = ++srNo;
+  td2.innerHTML = name;
+  td3.innerHTML = points;
+  // trow.appendChild(td1);
+  trow.appendChild(td2);
+  trow.appendChild(td3);
+  tbody.appendChild(trow);
+}
+
+function selectData() {
+  firebase
+    .database()
+    .ref("player")
+    .once("value", function (AllRecords) {
+      AllRecords.forEach(function (CurrentRecord) {
+        var name = CurrentRecord.val().Name;
+        var points = CurrentRecord.val().Points;
+        addToTable(name, points);
+      });
+    });
+  showTable();
+}
+
+function addScore() {
+  stopVideo();
+  $("#live").hide();
+  $("#dt").hide();
+  $("#leaderboard").show();
+  $("#sub").click(function () {
+    var name = $("#name").val();
+    num = Math.floor(Math.random() * 10000000);
+    console.log(score);
+    firebase
+      .database()
+      .ref("player/" + num)
+      .set({
+        Name: name,
+        Points: parseInt(score * 20),
+      });
+
+    setTimeout(function () {
+      selectData();
+    }, 2000);
+  });
+}
+
+function showTable() {
+  $("#leaderboard").show();
+  $("#user").hide();
+  $("#live").hide();
+  $(".videos").hide();
+
+  setTimeout(function () {
+    $("#dt").DataTable({
+      pagingType: "simple",
+      searching: false,
+      // info: false,
+      lengthChange: false,
+      pageLength: 5,
+      // sorting: false,
+      order: [[1, "desc"]],
+    });
+  }, 2000);
+  setTimeout(function () {
+    $("#dt").show();
+  }, 1000);
+
+  // $(".dataTables_length").addClass("bs-select");
 }
 
 $(document).ready(function () {
@@ -249,44 +346,34 @@ $(document).ready(function () {
   $("#v5").hide();
   $("#innocent").hide();
   $("#guilty").hide();
+  $("#leaderboard").hide();
 
   $("#begin").on("click", function () {
-    // recognizeSpeech();
-    // if (flag == 0) {
-    //   initCamera();
-    // } else {
-    //   permissionDenied();
-    // }
-    // recognizeSpeech();
     $("#wrap").hide();
-    $("#intro").show();
-    setTimeout(function () {
-      $(".line-1").hide();
-      $(".line-2").show();
-      // recognizeSpeech();
+    // showTable();
+    selectData();
 
-      setTimeout(function () {
-        testMic();
-      }, 2500);
-    }, 4000);
+    // $("#wrap").hide();
+    // $("#intro").show();
+    // setTimeout(function () {
+    //   $(".line-1").hide();
+    //   $(".line-2").show();
+
+    //   setTimeout(function () {
+    //     testMic();
+    //   }, 2500);
+    // }, 4000);
   });
-  // ready = 1;
 });
 
 function recognizeSpeech(condition) {
   recognition.start();
+
   recognition.onspeechend = function () {
     recognition.stop();
     ready = 1;
-    // setTimeout(function () {
-    // $(".line-2").hide();
-    // $(".line-3").show();
-    // initCamera();
-    // setTimeout(function () {}, 2000);
-    // initCamera();
-    // }, 4000);
-    // flag = 0;
   };
+
   recognition.onerror = function () {
     console.log("ERROR");
     ready = 0;
@@ -302,6 +389,9 @@ function recognizeSpeech(condition) {
   recognition.onnomatch = function (event) {
     console.log("I didnt recognize your speech");
   };
+  setTimeout(function () {
+    recognition.stop();
+  }, 7000);
 }
 
 function testMic() {
@@ -328,15 +418,33 @@ function permissionDenied() {
   $("#nopermission").show();
 }
 
+function stopVideo() {
+  p.then(function (mediaStream) {
+    mediaStream.getTracks().forEach(function (track) {
+      track.stop();
+    });
+  });
+  // vidStop = 1;
+  vid.pause();
+
+  ctrack.stop(vid);
+
+  // drawLoop();
+}
+
 function initCamera() {
-  var vid = document.getElementById("videoel");
-  var overlay = document.getElementById("cam_overlay");
+  // var vid = document.getElementById("videoel");
+  // var overlay = document.getElementById("cam_overlay");
 
-  var overlayCC = overlay.getContext("2d");
-
-  var p = navigator.mediaDevices.getUserMedia({ video: true });
+  // var overlayCC = overlay.getContext("2d");
+  p = navigator.mediaDevices.getUserMedia({ video: true });
   p.then(function (mediaStream) {
     var video = document.querySelector("video");
+    // if (vidStop == 1) {
+    //   mediaStream.getTracks().forEach(function (track) {
+    //     track.stop();
+    //   });
+    // }
     try {
       video.srcObject = mediaStream;
       console.log("video captured");
@@ -381,7 +489,6 @@ function initCamera() {
     // annyang.abort();
   });
 
-  var ctrack = new clm.tracker({ useWebGL: true });
   ctrack.init(pModel);
   var ec = new emotionClassifier();
   ec.init(emotionModel);
